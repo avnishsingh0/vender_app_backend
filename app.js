@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://vender-app-frontend-dwr3.vercel.app/",
+    origin: "https://vender-app-frontend-dwr3.vercel.app",
     credentials: true,
   })
 );
