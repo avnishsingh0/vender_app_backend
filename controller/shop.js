@@ -1,16 +1,19 @@
-const express = require("express");
+// third party
+const fs = require("fs");
 const path = require("path");
 const router = express.Router();
-const fs = require("fs");
+const express = require("express");
 const jwt = require("jsonwebtoken");
+
+// internal imports
+const Shop = require("../model/shop");
+const { upload } = require("../multer");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
-const Shop = require("../model/shop");
-const { isAuthenticated, isSeller, } = require("../middleware/auth");
-const { upload } = require("../multer");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const { isSeller } = require("../middleware/auth");
 const ErrorHandler = require("../utils/ErrorHandler");
 const sendShopToken = require("../utils/sendShopToken");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 
 // create shop
 router.post("/create-shop", upload.single("file"), async (req, res, next) => {
@@ -19,7 +22,7 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
     const sellerEmail = await Shop.findOne({ email });
     if (sellerEmail) {
       const filename = req.file.filename;
-      const filePath = `uploads/${filename}`
+      const filePath = `uploads/${filename}`;
       fs.unlink(filePath, (err) => {
         if (err) {
           console.log(err);
@@ -89,7 +92,7 @@ router.post(
 
       const { name, email, password, avatar, zipCode, address, phoneNumber } =
         newSeller;
-     
+
       let seller = await Shop.findOne({ email });
 
       if (seller) {
@@ -171,14 +174,14 @@ router.get(
   "/logout",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      res.cookie("seller_token",null,{
-        expires:new Date(Date.now()),
-        httpOnly:true,
+      res.cookie("seller_token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
       });
       res.status(201).json({
         success: true,
-        message: "Log out successful!"
-      })
+        message: "Log out successful!",
+      });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -260,4 +263,4 @@ router.put(
     }
   })
 );
-module.exports=router
+module.exports = router;

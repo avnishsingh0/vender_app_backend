@@ -1,12 +1,14 @@
-const express = require("express");
-const router = express.Router();
+// internal imports
+const Shop = require("../model/shop");
+const Order = require("../model/order");
+const Product = require("../model/product");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const { isAuthenticated, isSeller } = require("../middleware/auth");
-const Order = require("../model/order");
-const Shop = require("../model/shop");
-const Product = require("../model/product");
+const { isSeller } = require("../middleware/auth");
 
+// third party
+const router = express.Router();
+const express = require("express");
 // create new order
 router.post(
   "/create-order",
@@ -111,7 +113,7 @@ router.put(
       if (req.body.status === "Delivered") {
         order.deliveredAt = Date.now();
         order.paymentInfo.status = "Succeeded";
-        const serviceCharge = order.totalPrice * 0.10;
+        const serviceCharge = order.totalPrice * 0.1;
         await updateSellerInfo(order.totalPrice - serviceCharge);
       }
 
@@ -193,7 +195,7 @@ router.put(
       async function updateOrder(id, qty) {
         const product = await Product.findById(id);
         product.stock += qty;
-        product.sold_out -= qty
+        product.sold_out -= qty;
         await product.save({ validateBeforeSave: false });
       }
     } catch (error) {
@@ -201,6 +203,5 @@ router.put(
     }
   })
 );
-
 
 module.exports = router;

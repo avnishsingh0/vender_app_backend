@@ -1,5 +1,5 @@
-const express = require("express");
 const app = express();
+const express = require("express");
 const ErrorHandler = require("./utils/ErrorHandler");
 
 const cookieParser = require("cookie-parser");
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://vender-app-frontend-dwr3.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -32,7 +32,7 @@ const coupon = require("./controller/coupounCode");
 const payment = require("./controller/payment");
 const order = require("./controller/order");
 const conversation = require("./controller/conversation");
-const message  = require("./controller/message");
+const message = require("./controller/message");
 
 app.use("/api/v2/user", user);
 app.use("/api/v2/shop", shop);
@@ -42,7 +42,7 @@ app.use("/api/v2/coupon", coupon);
 app.use("/api/v2/payment", payment);
 app.use("/api/v2/order", order);
 app.use("/api/v2/conversation", conversation);
-app.use("/api/v2/message", message );
+app.use("/api/v2/message", message);
 
 const errorHandlerMiddleware = (err, req, res, next) => {
   if (err instanceof ErrorHandler) {

@@ -1,13 +1,16 @@
-const express = require("express");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const router = express.Router();
-const Product = require("../model/product");
+// internal imports
 const Shop = require("../model/shop");
 const { upload } = require("../multer");
 const Order = require("../model/order");
+const Product = require("../model/product");
 const ErrorHandler = require("../utils/ErrorHandler");
-const fs = require("fs");
 const { isSeller, isAuthenticated } = require("../middleware/auth");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+
+// third party
+const fs = require("fs");
+const router = express.Router();
+const express = require("express");
 
 // create product
 router.post(
@@ -26,17 +29,16 @@ router.post(
         const productData = req.body;
         productData.images = imageUrls;
         productData.shop = shop;
-        
+
         const product = await Product.create(productData);
-        
+
         res.status(201).json({
           success: true,
           product,
-        });        
+        });
       }
     } catch (error) {
       return next(new ErrorHandler(error, 400));
-
     }
   })
 );

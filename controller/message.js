@@ -1,10 +1,13 @@
+// internal imports
+const { upload } = require("../multer");
 const Messages = require("../model/messages");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const express = require("express");
-const path = require ("path");
-const { upload } = require("../multer");
+
+// third party
+const path = require("path");
 const router = express.Router();
+const express = require("express");
 
 // create new message
 router.post(

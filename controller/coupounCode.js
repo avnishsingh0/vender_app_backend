@@ -1,9 +1,11 @@
-const express = require("express");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const Shop = require("../model/shop");
-const ErrorHandler = require("../utils/ErrorHandler");
+// internal imports
 const { isSeller } = require("../middleware/auth");
 const CoupounCode = require("../model/coupounCode");
+const ErrorHandler = require("../utils/ErrorHandler");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+
+// third party
+const express = require("express");
 const router = express.Router();
 
 // create coupoun code

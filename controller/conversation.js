@@ -1,8 +1,11 @@
+// internal imports
 const Conversation = require("../model/conversation");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const express = require("express");
 const { isSeller, isAuthenticated } = require("../middleware/auth");
+
+// third party
+const express = require("express");
 const router = express.Router();
 
 // create a new conversation

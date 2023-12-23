@@ -1,10 +1,12 @@
-const express = require("express");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+// internal imports
 const { upload } = require("../multer");
 const Shop = require("../model/shop");
 const Event = require("../model/event");
 const ErrorHandler = require("../utils/ErrorHandler");
-const { isSeller, isAdmin, isAuthenticated } = require("../middleware/auth");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+
+// third party
+const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 
@@ -104,8 +106,4 @@ router.delete(
     }
   })
 );
-
-// all events --- for admin
-
-
 module.exports = router;
